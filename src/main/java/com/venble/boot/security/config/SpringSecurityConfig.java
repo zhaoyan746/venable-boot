@@ -1,11 +1,11 @@
-package com.venble.boot.security;
+package com.venble.boot.security.config;
 
-import lombok.RequiredArgsConstructor;
+import com.venble.boot.security.JwtAuthenticationFilter;
+import com.venble.boot.security.exception.handler.AccessDeniedHandlerImpl;
+import com.venble.boot.security.exception.handler.AuthenticationEntryPointImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SpringSecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -29,15 +28,17 @@ public class SpringSecurityConfig {
 
     private final AuthenticationEntryPointImpl authenticationEntryPointImpl;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public SpringSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, SecurityProperties securityProperties,
+                                AccessDeniedHandlerImpl accessDeniedHandlerImpl, AuthenticationEntryPointImpl authenticationEntryPointImpl) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.securityProperties = securityProperties;
+        this.accessDeniedHandlerImpl = accessDeniedHandlerImpl;
+        this.authenticationEntryPointImpl = authenticationEntryPointImpl;
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

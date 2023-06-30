@@ -1,4 +1,4 @@
-package com.venble.boot.security;
+package com.venble.boot.security.utils;
 
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;

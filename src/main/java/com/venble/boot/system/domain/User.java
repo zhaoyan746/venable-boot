@@ -1,13 +1,12 @@
 package com.venble.boot.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.venble.boot.common.vo.AbstractAuditingEntity;
+import com.venble.boot.jpa.domain.AbstractAuditingEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -15,16 +14,14 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import java.util.HashSet;
 import java.util.Set;
 
-
-@Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
+@Data
 @Table(name = "sys_user")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Long id;
 
     @NotNull
@@ -35,7 +32,7 @@ public class User extends AbstractAuditingEntity<Long> {
     @JsonIgnore
     @NotNull
     @Size(min = 60, max = 60)
-    @Column(name = "password_hash", length = 60, nullable = false)
+    @Column(name = "password_hash", nullable = false, length = 50)
     private String password;
 
     @Email
@@ -45,7 +42,11 @@ public class User extends AbstractAuditingEntity<Long> {
 
     @NotNull
     @Column(nullable = false)
-    private boolean activated = true;
+    private boolean activated = false;
+
+    @Size(max = 256)
+    @Column(name = "avatar_url", length = 256)
+    private String avatarUrl;
 
     @JsonIgnore
     @ManyToMany

@@ -1,7 +1,7 @@
-package com.venble.boot.security;
+package com.venble.boot.security.utils;
 
+import com.venble.boot.security.config.SecurityProperties;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;

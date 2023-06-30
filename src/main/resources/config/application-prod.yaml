@@ -8,11 +8,32 @@ spring:
     hikari:
       pool-name: HikariCP
       auto-commit: false
+
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+
   jpa:
+    generate-ddl: false
+    show-sql: true
+    open-in-view: false
     hibernate:
       ddl-auto: none
-    open-in-view: false
-    database-platform: org.hibernate.dialect.MySQLDialect
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    properties:
+      hibernate:
+        cache:
+          use_query_cache: false
+          use_second_level_cache: false
+        generate_statistics: false
+        order_updates: true
 
 application:
   security:
@@ -25,4 +46,3 @@ application:
     ignore-ant-patterns:
       - /webjars/**
       - /login
-

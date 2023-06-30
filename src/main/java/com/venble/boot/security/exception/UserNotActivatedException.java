@@ -1,4 +1,4 @@
-package com.venble.boot.security;
+package com.venble.boot.security.exception;
 
 import org.springframework.security.core.AuthenticationException;
 
