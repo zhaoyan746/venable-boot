@@ -1,4 +1,4 @@
-package com.venble.boot.security;
+package com.venble.boot.security.filter;
 
 import com.venble.boot.security.service.CustomUserDetailsService;
 import com.venble.boot.security.utils.JwtTokenProvider;
