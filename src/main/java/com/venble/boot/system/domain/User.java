@@ -7,20 +7,21 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import java.util.HashSet;
 import java.util.Set;
 
+
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "sys_user")
 public class User extends AbstractAuditingEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
@@ -40,7 +41,6 @@ public class User extends AbstractAuditingEntity<Long> {
     @Column(length = 254, unique = true)
     private String email;
 
-    @NotNull
     @Column(nullable = false)
     private boolean activated = false;
 
@@ -54,7 +54,6 @@ public class User extends AbstractAuditingEntity<Long> {
             name = "sys_user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
     private Set<Role> roles = new HashSet<>();
 }

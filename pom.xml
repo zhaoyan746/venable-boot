@@ -46,7 +46,7 @@
         <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
         <!-- utils -->
         <lombok.version>1.18.28</lombok.version>
-        <commons-pool2.version>2.11.1</commons-pool2.version>
+        <commons-lang3.version.version>3.12.0</commons-lang3.version.version>
         <jwt.version>0.11.5</jwt.version>
     </properties>
 
@@ -69,6 +69,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- orm -->
         <dependency>
             <groupId>com.mysql</groupId>
@@ -87,6 +92,11 @@
             <version>${lombok.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
             <version>${jwt.version}</version>
@@ -103,6 +113,7 @@
             <version>${jwt.version}</version>
             <scope>runtime</scope>
         </dependency>
+
     </dependencies>
 
     <build>
