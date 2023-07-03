@@ -85,10 +85,21 @@
             <version>${mysql.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate-validator.version}</version>
         </dependency>
+
         <!-- utils -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -123,7 +134,10 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -140,6 +154,9 @@
                     <compilerArgs>
                         <arg>-parameters</arg>
                     </compilerArgs>
+                    <compilerArguments>
+                        <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor,lombok.launch.AnnotationProcessorHider$AnnotationProcessor</processor>
+                    </compilerArguments>
                 </configuration>
             </plugin>
             <plugin>
