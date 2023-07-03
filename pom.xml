@@ -46,8 +46,9 @@
         <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
         <!-- utils -->
         <lombok.version>1.18.28</lombok.version>
-        <commons-lang3.version.version>3.12.0</commons-lang3.version.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
         <jwt.version>0.11.5</jwt.version>
+        <mybatis-plus.version>3.5.1</mybatis-plus.version>
     </properties>
 
     <dependencies>
@@ -137,6 +138,21 @@
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
+        </dependency>
+        <!--generator-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-core</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
     </dependencies>
 
