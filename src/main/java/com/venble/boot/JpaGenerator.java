@@ -19,8 +19,8 @@ public class JpaGenerator {
      * 数据源配置
      */
     public static final DataSourceConfig.Builder DATA_SOURCE_CONFIG =
-            new DataSourceConfig.Builder("jdbc:mysql://152.136.127.120:3389/venable-boot?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true",
-                    "root", "Wesure@666");
+            new DataSourceConfig.Builder("jdbc:mysql://127.0.0.1:3306/venable-boot?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true",
+                    "root", "123456");
 
     protected static List<String> getTables(String tables) {
         return "all".equals(tables) ? Collections.emptyList() : Arrays.asList(tables.split(","));
