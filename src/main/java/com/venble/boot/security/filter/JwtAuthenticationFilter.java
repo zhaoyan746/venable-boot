@@ -1,7 +1,9 @@
 package com.venble.boot.security.filter;
 
+import com.venble.boot.common.exception.ErrorCode;
+import com.venble.boot.common.util.ServletUtils;
 import com.venble.boot.security.service.CustomUserDetailsService;
-import com.venble.boot.security.utils.JwtTokenProvider;
+import com.venble.boot.security.util.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,16 +27,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.customUserDetailsService = customUserDetailsService;
     }
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String token = tokenProvider.resolveToken(request);
         if (token != null && tokenProvider.validateToken(token)) {
-            String username = tokenProvider.getUsername(token);
-            CustomUserDetailsService userDetails = (CustomUserDetailsService) customUserDetailsService.loadUserByUsername(username);
-            if (userDetails != null) {
-                // TODO
+            // token is expired
+            if (tokenProvider.isExpired(token)) {
+                ServletUtils.writeJson(response, ErrorCode.TOKEN_EXPIRED);
             }
         }
         filterChain.doFilter(request, response);

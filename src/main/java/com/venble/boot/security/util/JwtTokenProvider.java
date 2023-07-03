@@ -1,4 +1,4 @@
-package com.venble.boot.security.utils;
+package com.venble.boot.security.util;
 
 import com.venble.boot.security.config.SecurityProperties;
 import io.jsonwebtoken.Claims;
@@ -101,10 +101,31 @@ public class JwtTokenProvider {
     /**
      * 获取用户名
      *
-     * @param token
+     * @param token token
      * @return 用户名
      */
     public String getUsername(String token) {
         return getClaim(token, Claims::getSubject);
+    }
+
+
+    /**
+     * token 是否过期
+     *
+     * @param token token
+     * @return 是否过期
+     */
+    public boolean isExpired(String token) {
+        return getExpiration(token).before(new Date());
+    }
+
+    /**
+     * 获取过期时间
+     *
+     * @param token token
+     * @return 过期时间
+     */
+    private Date getExpiration(String token) {
+        return getClaim(token, Claims::getExpiration);
     }
 }

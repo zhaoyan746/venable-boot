@@ -1,12 +1,11 @@
 package com.venble.boot.security.config;
 
-import com.venble.boot.security.filter.JwtAuthenticationFilter;
 import com.venble.boot.security.exception.handler.AccessDeniedHandlerImpl;
 import com.venble.boot.security.exception.handler.AuthenticationEntryPointImpl;
+import com.venble.boot.security.filter.JwtAuthenticationFilter;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,8 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-
-import java.util.Set;
 
 @Configuration
 @EnableWebSecurity

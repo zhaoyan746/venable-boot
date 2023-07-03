@@ -2,7 +2,7 @@ package com.venble.boot.system.controller;
 
 import com.venble.boot.common.exception.ErrorCode;
 import com.venble.boot.common.vo.R;
-import com.venble.boot.security.utils.JwtTokenProvider;
+import com.venble.boot.security.util.JwtTokenProvider;
 import com.venble.boot.system.controller.vm.LoginVM;
 import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;

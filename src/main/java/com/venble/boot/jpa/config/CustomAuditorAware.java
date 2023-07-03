@@ -1,7 +1,7 @@
 package com.venble.boot.jpa.config;
 
 import com.venble.boot.common.constant.Constants;
-import com.venble.boot.security.utils.SecurityUtils;
+import com.venble.boot.security.util.SecurityUtils;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 

@@ -28,4 +28,6 @@ public class ErrorCode {
     public static final ErrorCode USER_NOT_FOUND = new ErrorCode(50001, "用户不存在");
 
     public static final ErrorCode USER_NOT_ACTIVATED = new ErrorCode(50002, "用户未激活");
+
+    public static final ErrorCode TOKEN_EXPIRED = new ErrorCode(50003, "token已过期");
 }
