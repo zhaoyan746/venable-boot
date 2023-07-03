@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
  * @author chenxc
  */
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Integer> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
 
 }

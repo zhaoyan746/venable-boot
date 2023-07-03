@@ -1,4 +1,4 @@
-package com.venble.boot.security;
+package com.venble.boot.security.exception.handler;
 
 import com.venble.boot.common.exception.ErrorCode;
 import com.venble.boot.common.util.ServletUtils;

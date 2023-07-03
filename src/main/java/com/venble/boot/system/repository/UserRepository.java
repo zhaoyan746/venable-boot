@@ -12,7 +12,7 @@ import java.util.Optional;
  * Spring Data JPA repository for the {@link User} entity.
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
-    Optional<User> findOneByUsername(String username);
+    User findByUsername(String username);
 }

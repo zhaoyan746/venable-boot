@@ -1,4 +1,4 @@
-package com.venble.boot.common.vo;
+package com.venble.boot.jpa.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;

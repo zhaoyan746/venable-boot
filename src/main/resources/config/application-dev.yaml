@@ -2,17 +2,38 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://152.136.127.120:3389/venable-boot?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    url: jdbc:mysql://152.136.127.120:3389/venable-boot?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password: Wesure@666
     hikari:
       pool-name: HikariCP
       auto-commit: false
+
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+
   jpa:
+    generate-ddl: false
+    show-sql: true
+    open-in-view: false
     hibernate:
       ddl-auto: none
-    open-in-view: false
-    database-platform: org.hibernate.dialect.MySQLDialect
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    properties:
+      hibernate:
+        cache:
+          use_query_cache: false
+          use_second_level_cache: false
+        generate_statistics: false
+        order_updates: true
 
 application:
   security:
@@ -24,4 +45,3 @@ application:
       validity-in-seconds-for-remember-me: 2592000
     ignore-ant-patterns:
       - /webjars/**
-      - /login
