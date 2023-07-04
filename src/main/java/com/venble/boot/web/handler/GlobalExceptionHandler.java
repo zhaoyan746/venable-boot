@@ -1,11 +1,15 @@
 package com.venble.boot.web.handler;
 
+import com.venble.boot.common.exception.ApiException;
 import com.venble.boot.common.exception.ErrorCode;
 import com.venble.boot.common.vo.R;
+import com.venble.boot.security.exception.UserNotActivatedException;
+import com.venble.boot.security.exception.UserNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -85,6 +89,42 @@ public class GlobalExceptionHandler {
     public R<?> accessDeniedExceptionHandler(AccessDeniedException e) {
         log.error("权限不足异常:{}", e.getMessage(), e);
         return R.error(ErrorCode.FORBIDDEN);
+    }
+
+    /**
+     * 密码错误
+     */
+    @ExceptionHandler(BadCredentialsException.class)
+    public R<?> badCredentialsExceptionHandler(BadCredentialsException e) {
+        log.error("密码错误异常:{}", e.getMessage(), e);
+        return R.error(ErrorCode.ERROR.getCode(), "密码错误");
+    }
+
+    /**
+     * 用户未激活
+     */
+    @ExceptionHandler(UserNotActivatedException.class)
+    public R<?> userNotActivatedExceptionHandler(UserNotActivatedException e) {
+        log.error("用户未激活异常:{}", e.getMessage(), e);
+        return R.error(ErrorCode.ERROR.getCode(), "用户未激活");
+    }
+
+    /**
+     * 用户不存在
+     */
+    @ExceptionHandler(UserNotFoundException.class)
+    public R<?> userNotFoundExceptionHandler(UserNotFoundException e) {
+        log.error("用户不存在异常:{}", e.getMessage(), e);
+        return R.error(ErrorCode.ERROR.getCode(), "用户不存在");
+    }
+
+    /**
+     * api异常
+     */
+    @ExceptionHandler(ApiException.class)
+    public R<?> apiExceptionHandler(ApiException e) {
+        log.error("Api异常:{}", e.getMessage(), e);
+        return R.error(e.getCode(), e.getMessage());
     }
 
     /**
