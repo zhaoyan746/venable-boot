@@ -2,9 +2,9 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://152.136.127.120:3389/venable-boot?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: root
-    password: Wesure@666
+    url: jdbc:mysql://152.136.127.120:3389/venable-boot?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+    username: venable
+    password: venable@2023
     hikari:
       pool-name: HikariCP
       auto-commit: false
