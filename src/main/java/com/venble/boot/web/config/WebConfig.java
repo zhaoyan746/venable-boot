@@ -15,6 +15,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE") // 允许请求方法
                 .maxAge(168000) // 预检间隔时间
                 .allowedHeaders("*") // 允许头部设置
-                .allowCredentials(true); // 是否发送cookie
+                .allowCredentials(false); // 是否发送cookie
     }
 }
