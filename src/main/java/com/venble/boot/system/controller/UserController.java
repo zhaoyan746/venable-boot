@@ -1,9 +1,18 @@
 package com.venble.boot.system.controller;
 
+import com.venble.boot.common.vo.R;
+import com.venble.boot.system.controller.vm.LoginVM;
+import com.venble.boot.system.domain.User;
 import com.venble.boot.system.service.UserService;
+import jakarta.annotation.security.PermitAll;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
@@ -14,5 +23,17 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PermitAll
+    @PostMapping("/createUser")
+    public R<?> createUser(@Valid @RequestBody LoginVM loginVM) {
+
+        User user = new User();
+        user.setUsername(loginVM.getUsername());
+        user.setPassword(loginVM.getPassword());
+        userService.createUser(user);
+
+        return R.ok(LocalDateTime.now());
     }
 }

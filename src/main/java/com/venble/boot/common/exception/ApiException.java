@@ -11,6 +11,7 @@ import lombok.Getter;
  */
 @JsonIncludeProperties({"code", "message"})
 public class ApiException extends RuntimeException {
+
     public ApiException(String message) {
         super(message);
         this.code = ErrorCode.ERROR.getCode();
