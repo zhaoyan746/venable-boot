@@ -6,7 +6,6 @@ import com.venble.boot.security.filter.JwtAuthenticationFilter;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -32,7 +31,6 @@ public class SpringSecurityConfig {
     private final AuthenticationEntryPointImpl authenticationEntryPointImpl;
 
     private final RequestMappingHandlerMapping requestMappingHandlerMapping;
-
 
     public SpringSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, SecurityProperties securityProperties,
                                 AccessDeniedHandlerImpl accessDeniedHandlerImpl, AuthenticationEntryPointImpl authenticationEntryPointImpl,

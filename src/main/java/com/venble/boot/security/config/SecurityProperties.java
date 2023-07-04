@@ -10,14 +10,14 @@ import org.springframework.context.annotation.Configuration;
 public class SecurityProperties {
 
     /**
-     * Token is valid for 30 minutes
+     * Token is valid for rememberMeInSeconds seconds (1 weeks by default)
      */
-    private long tokenValidityInSecondsForRememberMe = 2592000;
+    private long tokenExpiryInSecondsForRememberMe = 604800;
 
     /**
      * Token is valid for 30 days
      */
-    private long tokenValidityInSeconds = 1800;
+    private long tokenExpiryInSeconds = 2592000;
 
     /**
      * Token header
@@ -38,9 +38,4 @@ public class SecurityProperties {
      * Token ant patterns
      */
     private String[] ignoreAntPatterns;
-
-    /**
-     * Before filter class name
-     */
-    private String beforeFilterClassName;
 }
