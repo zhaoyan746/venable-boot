@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import org.yaml.snakeyaml.Yaml;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Dingwq
@@ -18,9 +20,18 @@ public class JpaGenerator {
     /**
      * 数据源配置
      */
-    public static final DataSourceConfig.Builder DATA_SOURCE_CONFIG =
-            new DataSourceConfig.Builder("jdbc:mysql://127.0.0.1:3306/venable-boot?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true",
-                    "root", "123456");
+    public static final DataSourceConfig.Builder DATA_SOURCE_CONFIG;
+
+    static {
+        Yaml yaml = new Yaml();
+        Map<String, Object> config = yaml.load(JpaGenerator.class.getClassLoader().getResourceAsStream("config/application-dev.yaml"));
+        @SuppressWarnings("unchecked")
+        Map<String, Object> datasource = (Map<String, Object>) ((Map<String, Object>) config.get("spring")).get("datasource");
+        String url = (String) datasource.get("url");
+        String username = (String) datasource.get("username");
+        String password = (String) datasource.get("password");
+        DATA_SOURCE_CONFIG = new DataSourceConfig.Builder(url, username, password);
+    }
 
     protected static List<String> getTables(String tables) {
         return "all".equals(tables) ? Collections.emptyList() : Arrays.asList(tables.split(","));
