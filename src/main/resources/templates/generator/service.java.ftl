@@ -1,5 +1,7 @@
 package ${package.ServiceImpl};
 
+import com.venble.boot.jpa.service.QueryService;
+import ${package.Entity}.${entity};
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,6 +13,6 @@ import org.springframework.stereotype.Service;
  * @since ${date}
  */
 @Service
-public class ${table.serviceImplName} {
+public class ${table.serviceImplName} extends QueryService<${entity}>{
 
 }
