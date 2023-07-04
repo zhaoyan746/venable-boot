@@ -3,6 +3,8 @@ package com.venble.boot.security.util;
 import com.venble.boot.security.config.SecurityProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -52,11 +54,12 @@ public class JwtTokenProvider {
         Instant now = Instant.now();
         Instant validity;
         if (rememberMe) {
-            validity = now.plus(securityProperties.getTokenValidityInSecondsForRememberMe(), ChronoUnit.SECONDS);
+            validity = now.plus(securityProperties.getTokenExpiryInSecondsForRememberMe(), ChronoUnit.SECONDS);
         } else {
-            validity = now.plus(securityProperties.getTokenValidityInSeconds(), ChronoUnit.SECONDS);
+            validity = now.plus(securityProperties.getTokenExpiryInSeconds(), ChronoUnit.SECONDS);
         }
         String token = Jwts.builder()
+                .signWith(Keys.hmacShaKeyFor(securityProperties.getTokenSecret().getBytes()), SignatureAlgorithm.HS512)
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(validity))
                 .setSubject(authentication.getName())

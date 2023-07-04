@@ -37,11 +37,8 @@ spring:
 
 application:
   security:
-    token:
-      secret: bXktc2VjcmV0LWtleS13aGljaC1zaG91bGQtYmUtY2hhbmdlZC1pbi1wcm9kdWN0aW9uLWFuZC1iZS1iYXNlNjQtZW5jb2RlZAo=
-      header: Authorization
-      prefix: Bearer
-      validity-in-seconds: 86400
-      validity-in-seconds-for-remember-me: 2592000
+    token-secret: bXktc2VjcmV0LWtleS13aGljaC1zaG91bGQtYmUtY2hhbmdlZC1pbi1wcm9kdWN0aW9uLWFuZC1iZS1iYXNlNjQtZW5jb2RlZAo=
+    token-header: Authorization
+    token-expiry-in-seconds: 86400
     ignore-ant-patterns:
       - /webjars/**

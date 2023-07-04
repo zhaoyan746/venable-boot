@@ -4,11 +4,13 @@ import com.venble.boot.common.exception.ErrorCode;
 import com.venble.boot.common.util.ServletUtils;
 import com.venble.boot.security.service.CustomUserDetailsService;
 import com.venble.boot.security.util.JwtTokenProvider;
+import com.venble.boot.security.util.SecurityUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -35,6 +37,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // token is expired
             if (tokenProvider.isExpired(token)) {
                 ServletUtils.writeJson(response, ErrorCode.TOKEN_EXPIRED);
+            } else {
+                String username = tokenProvider.getUsername(token);
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+                SecurityUtils.setCurrentUserLogin(userDetails);
             }
         }
         filterChain.doFilter(request, response);
