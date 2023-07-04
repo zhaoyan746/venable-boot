@@ -33,7 +33,6 @@ public class SpringSecurityConfig {
 
     private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-
     public SpringSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, SecurityProperties securityProperties,
                                 AccessDeniedHandlerImpl accessDeniedHandlerImpl, AuthenticationEntryPointImpl authenticationEntryPointImpl,
                                 RequestMappingHandlerMapping requestMappingHandlerMapping) {

@@ -52,9 +52,9 @@ public class JwtTokenProvider {
         Instant now = Instant.now();
         Instant validity;
         if (rememberMe) {
-            validity = now.plus(securityProperties.getTokenValidityInSecondsForRememberMe(), ChronoUnit.SECONDS);
+            validity = now.plus(securityProperties.getTokenExpiryInSecondsForRememberMe(), ChronoUnit.SECONDS);
         } else {
-            validity = now.plus(securityProperties.getTokenValidityInSeconds(), ChronoUnit.SECONDS);
+            validity = now.plus(securityProperties.getTokenExpiryInSeconds(), ChronoUnit.SECONDS);
         }
         String token = Jwts.builder()
                 .setIssuedAt(Date.from(now))
