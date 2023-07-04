@@ -9,40 +9,40 @@ import lombok.Getter;
  * @author zbq
  * @since 4/2/2022
  */
-@JsonIncludeProperties({"code", "msg"})
+@JsonIncludeProperties({"code", "message"})
 public class ApiException extends RuntimeException {
-    public ApiException(String msg) {
-        super(msg);
+    public ApiException(String message) {
+        super(message);
         this.code = ErrorCode.ERROR.getCode();
-        this.msg = msg;
+        this.message = message;
     }
 
-    public ApiException(int code, String msg) {
-        super(msg);
-        this.msg = msg;
+    public ApiException(int code, String message) {
+        super(message);
+        this.message = message;
         this.code = code;
     }
 
-    public ApiException(String msg, Throwable e) {
-        super(msg, e);
+    public ApiException(String message, Throwable e) {
+        super(message, e);
         this.code = ErrorCode.ERROR.getCode();
-        this.msg = msg;
+        this.message = message;
     }
 
-    public ApiException(int code, String msg, Throwable e) {
-        super(msg, e);
-        this.msg = msg;
+    public ApiException(int code, String message, Throwable e) {
+        super(message, e);
+        this.message = message;
         this.code = code;
     }
 
     public ApiException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.code = errorCode.getCode();
-        this.msg = errorCode.getMessage();
+        this.message = errorCode.getMessage();
     }
 
     @Getter
     private final int code;
     @Getter
-    private final String msg;
+    private final String message;
 }
