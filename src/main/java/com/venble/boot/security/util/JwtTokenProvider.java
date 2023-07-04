@@ -3,13 +3,15 @@ package com.venble.boot.security.util;
 import com.venble.boot.security.config.SecurityProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -49,16 +51,17 @@ public class JwtTokenProvider {
      */
     public String createToken(Authentication authentication, boolean rememberMe) {
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
-        Instant now = Instant.now();
-        Instant validity;
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime validity;
         if (rememberMe) {
-            validity = now.plus(securityProperties.getTokenExpiryInSecondsForRememberMe(), ChronoUnit.SECONDS);
+            validity = now.plusSeconds(securityProperties.getTokenExpiryInSecondsForRememberMe());
         } else {
-            validity = now.plus(securityProperties.getTokenExpiryInSeconds(), ChronoUnit.SECONDS);
+            validity = now.plusSeconds(securityProperties.getTokenExpiryInSeconds());
         }
         String token = Jwts.builder()
-                .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(validity))
+                .signWith(Keys.hmacShaKeyFor(securityProperties.getTokenSecret().getBytes()), SignatureAlgorithm.HS512)
+                .setIssuedAt(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()))
+                .setExpiration(Date.from(validity.atZone(ZoneId.systemDefault()).toInstant()))
                 .setSubject(authentication.getName())
                 .claim(SecurityUtils.AUTHORITIES_KEY, authorities)
                 .compact();
@@ -116,7 +119,7 @@ public class JwtTokenProvider {
      * @return 是否过期
      */
     public boolean isExpired(String token) {
-        return getExpiration(token).before(new Date());
+        return getExpiration(token).isBefore(LocalDateTime.now());
     }
 
     /**
@@ -125,7 +128,7 @@ public class JwtTokenProvider {
      * @param token token
      * @return 过期时间
      */
-    private Date getExpiration(String token) {
-        return getClaim(token, Claims::getExpiration);
+    private LocalDateTime getExpiration(String token) {
+        return LocalDateTime.from(getClaim(token, Claims::getExpiration).toInstant());
     }
 }
