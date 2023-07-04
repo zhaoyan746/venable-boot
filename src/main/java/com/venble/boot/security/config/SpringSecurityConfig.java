@@ -53,7 +53,7 @@ public class SpringSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 // 开启跨域
-                .cors(Customizer.withDefaults())
+                .cors(AbstractHttpConfigurer::disable)
                 // 关闭csrf(使用jwt,不需要csrf)
                 .csrf(AbstractHttpConfigurer::disable)
                 // 关闭session(使用jwt,不需要session)
