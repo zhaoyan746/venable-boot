@@ -129,6 +129,6 @@ public class JwtTokenProvider {
      * @return 过期时间
      */
     private LocalDateTime getExpiration(String token) {
-        return LocalDateTime.from(getClaim(token, Claims::getExpiration).toInstant());
+        return LocalDateTime.ofInstant(getClaim(token, Claims::getExpiration).toInstant(), ZoneId.systemDefault());
     }
 }
