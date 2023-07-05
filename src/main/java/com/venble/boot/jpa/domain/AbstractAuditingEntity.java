@@ -28,7 +28,7 @@ public abstract class AbstractAuditingEntity<T> {
 
     @CreatedBy
     @Column(name = "created_by", nullable = false, length = 50, updatable = false)
-    private String createdBy;
+    private Long createdBy;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -36,7 +36,7 @@ public abstract class AbstractAuditingEntity<T> {
 
     @LastModifiedBy
     @Column(name = "updated_by", length = 50)
-    private String updatedBy;
+    private Long updatedBy;
 
     @LastModifiedDate
     @Column(name = "updated_at")

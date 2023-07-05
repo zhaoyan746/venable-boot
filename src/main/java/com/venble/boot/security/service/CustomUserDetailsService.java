@@ -1,6 +1,7 @@
 package com.venble.boot.security.service;
 
 import com.venble.boot.common.exception.ErrorCode;
+import com.venble.boot.security.domain.CustomUserDetails;
 import com.venble.boot.security.exception.UserNotActivatedException;
 import com.venble.boot.security.exception.UserNotFoundException;
 import com.venble.boot.system.domain.Role;
@@ -33,7 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND.getMessage());
         }
-        if (!user.isActivated()) {
+        if (!user.isEnabled()) {
             throw new UserNotActivatedException(ErrorCode.USER_NOT_ACTIVATED.getMessage());
         }
         List<GrantedAuthority> grantedAuthorities = user
@@ -42,6 +43,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .map(Role::getName)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
+        return new CustomUserDetails(user.getId(), user.getUsername(), user.getPassword(), user.isEnabled(), grantedAuthorities);
     }
 }

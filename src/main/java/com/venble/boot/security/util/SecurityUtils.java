@@ -1,6 +1,7 @@
 package com.venble.boot.security.util;
 
 import com.venble.boot.security.config.AuthoritiesConstants;
+import com.venble.boot.security.domain.CustomUserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,22 +20,38 @@ public final class SecurityUtils {
 
     public static final String AUTHORITIES_KEY = "auth";
 
+    public static Optional<Authentication> getAuthentication() {
+        return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication());
+    }
+
     /**
      * Get the login of the current user.
      *
      * @return the login of the current user.
      */
-    public static Optional<String> getCurrentUserLogin() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        return Optional.ofNullable(extractPrincipal(securityContext.getAuthentication()));
+    public static Optional<CustomUserDetails> getCurrentUser() {
+        return getAuthentication()
+                .map(Authentication::getPrincipal)
+                .filter(principal -> principal instanceof CustomUserDetails)
+                .map(CustomUserDetails.class::cast);
     }
+
+    /**
+     * Get the user id of the current user.
+     *
+     * @return the user id of the current user.
+     */
+    public static Optional<Long> getCurrentUserId() {
+        return getCurrentUser().map(CustomUserDetails::getId);
+    }
+
 
     /**
      * Set the login of the current user.
      *
      * @param userDetails the login of the current user.
      */
-    public static void setCurrentUserLogin(UserDetails userDetails) {
+    public static void setCurrentUserLogin(CustomUserDetails userDetails) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 userDetails,
                 userDetails.getUsername(),
@@ -43,29 +60,6 @@ public final class SecurityUtils {
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
 
-    private static String extractPrincipal(Authentication authentication) {
-        if (authentication == null) {
-            return null;
-        } else if (authentication.getPrincipal() instanceof UserDetails springSecurityUser) {
-            return springSecurityUser.getUsername();
-        } else if (authentication.getPrincipal() instanceof String s) {
-            return s;
-        }
-        return null;
-    }
-
-    /**
-     * Get the JWT of the current user.
-     *
-     * @return the JWT of the current user.
-     */
-    public static Optional<String> getCurrentUserJWT() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        return Optional
-                .ofNullable(securityContext.getAuthentication())
-                .filter(authentication -> authentication.getCredentials() instanceof String)
-                .map(authentication -> (String) authentication.getCredentials());
-    }
 
     /**
      * Check if a user is authenticated.
@@ -73,8 +67,7 @@ public final class SecurityUtils {
      * @return true if the user is authenticated, false otherwise.
      */
     public static boolean isAuthenticated() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication != null && getAuthorities(authentication).noneMatch(AuthoritiesConstants.ANONYMOUS::equals);
+       return getAuthentication().map(Authentication::isAuthenticated).orElse(false);
     }
 
     /**

@@ -33,7 +33,6 @@ public class UserController {
         user.setUsername(loginVM.getUsername());
         user.setPassword(loginVM.getPassword());
         userService.createUser(user);
-
         return R.ok(LocalDateTime.now());
     }
 }

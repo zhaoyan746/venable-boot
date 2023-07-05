@@ -1,6 +1,7 @@
 package com.venble.boot.security.util;
 
 import com.venble.boot.security.config.SecurityProperties;
+import com.venble.boot.security.domain.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -50,6 +54,7 @@ public class JwtTokenProvider {
      * @return token
      */
     public String createToken(Authentication authentication, boolean rememberMe) {
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime validity;
@@ -60,9 +65,10 @@ public class JwtTokenProvider {
         }
         String token = Jwts.builder()
                 .signWith(Keys.hmacShaKeyFor(securityProperties.getTokenSecret().getBytes()), SignatureAlgorithm.HS512)
+                .setId(customUserDetails.getId().toString())
+                .setSubject(authentication.getName())
                 .setIssuedAt(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()))
                 .setExpiration(Date.from(validity.atZone(ZoneId.systemDefault()).toInstant()))
-                .setSubject(authentication.getName())
                 .claim(SecurityUtils.AUTHORITIES_KEY, authorities)
                 .compact();
         return securityProperties.getTokenPrefix() + token;
@@ -130,5 +136,25 @@ public class JwtTokenProvider {
      */
     private LocalDateTime getExpiration(String token) {
         return LocalDateTime.ofInstant(getClaim(token, Claims::getExpiration).toInstant(), ZoneId.systemDefault());
+    }
+
+    /**
+     * 获取用户详情
+     *
+     * @param token token
+     * @return 用户详情
+     */
+    public CustomUserDetails getUserDetails(String token) {
+        Claims body = Jwts.parserBuilder()
+                .setSigningKey(securityProperties.getTokenSecret().getBytes())
+                .build()
+                .parseClaimsJws(token).getBody();
+        // TODO
+        return new CustomUserDetails(
+                Long.parseLong(body.getId()),
+                body.getSubject(),
+                "",
+                true,
+                new HashSet<>());
     }
 }

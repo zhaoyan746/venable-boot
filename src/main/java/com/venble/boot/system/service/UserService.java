@@ -39,7 +39,7 @@ public class UserService {
         // TODO: username can not duplicate
         String encryptedPassword = passwordEncoder.encode(RandomUtils.generatePassword());
         user.setPassword(encryptedPassword);
-        user.setActivated(true);
+        user.setEnabled(true);
         if (user.getRoles() != null) {
             Set<Role> roles = user
                     .getRoles()

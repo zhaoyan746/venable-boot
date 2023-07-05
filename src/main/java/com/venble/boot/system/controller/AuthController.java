@@ -2,6 +2,7 @@ package com.venble.boot.system.controller;
 
 import com.venble.boot.common.exception.ErrorCode;
 import com.venble.boot.common.vo.R;
+import com.venble.boot.security.domain.CustomUserDetails;
 import com.venble.boot.security.util.JwtTokenProvider;
 import com.venble.boot.system.controller.vm.LoginVM;
 import jakarta.annotation.security.PermitAll;
@@ -36,13 +37,8 @@ public class AuthController {
                 loginVM.getUsername(),
                 loginVM.getPassword()
         );
-        Authentication authentication;
-        try {
-            authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (UsernameNotFoundException e) {
-            return R.error(ErrorCode.ERROR.getCode(), e.getMessage());
-        }
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         return R.ok(jwtTokenProvider.createToken(authentication, loginVM.isRememberMe()));
     }
 }

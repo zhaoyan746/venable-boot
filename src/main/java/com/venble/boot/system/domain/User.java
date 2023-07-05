@@ -41,12 +41,12 @@ public class User extends AbstractAuditingEntity<Long> {
     @Column(length = 254, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private boolean activated = false;
-
     @Size(max = 256)
     @Column(name = "avatar_url", length = 256)
     private String avatarUrl;
+
+    @Column(nullable = false, name = "is_enabled")
+    private boolean isEnabled = true;
 
     @JsonIgnore
     @ManyToMany
