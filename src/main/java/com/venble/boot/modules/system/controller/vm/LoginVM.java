@@ -1,4 +1,4 @@
-package com.venble.boot.system.controller.vm;
+package com.venble.boot.modules.system.controller.vm;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

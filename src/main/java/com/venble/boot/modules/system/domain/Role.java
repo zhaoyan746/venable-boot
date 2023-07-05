@@ -1,10 +1,11 @@
-package com.venble.boot.system.domain;
+package com.venble.boot.modules.system.domain;
 
 import com.venble.boot.jpa.domain.AbstractAuditingEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.Set;
  * @author chenxc
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 @Entity
 @Table(name = "sys_role")
 public class Role extends AbstractAuditingEntity<Long> {

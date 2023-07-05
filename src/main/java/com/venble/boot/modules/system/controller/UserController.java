@@ -1,9 +1,9 @@
-package com.venble.boot.system.controller;
+package com.venble.boot.modules.system.controller;
 
 import com.venble.boot.common.vo.R;
-import com.venble.boot.system.controller.vm.LoginVM;
-import com.venble.boot.system.domain.User;
-import com.venble.boot.system.service.UserService;
+import com.venble.boot.modules.system.domain.User;
+import com.venble.boot.modules.system.service.UserService;
+import com.venble.boot.modules.system.controller.vm.LoginVM;
 import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,6 @@ public class UserController {
     @PermitAll
     @PostMapping("/createUser")
     public R<?> createUser(@Valid @RequestBody LoginVM loginVM) {
-
         User user = new User();
         user.setUsername(loginVM.getUsername());
         user.setPassword(loginVM.getPassword());

@@ -1,4 +1,4 @@
-package com.venble.boot.system.domain;
+package com.venble.boot.modules.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.venble.boot.jpa.domain.AbstractAuditingEntity;

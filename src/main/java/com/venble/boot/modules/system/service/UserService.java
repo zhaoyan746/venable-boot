@@ -1,11 +1,11 @@
-package com.venble.boot.system.service;
+package com.venble.boot.modules.system.service;
 
 
 import com.venble.boot.common.util.RandomUtils;
-import com.venble.boot.system.domain.Role;
-import com.venble.boot.system.domain.User;
-import com.venble.boot.system.repository.RoleRepository;
-import com.venble.boot.system.repository.UserRepository;
+import com.venble.boot.modules.system.domain.Role;
+import com.venble.boot.modules.system.domain.User;
+import com.venble.boot.modules.system.repository.RoleRepository;
+import com.venble.boot.modules.system.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

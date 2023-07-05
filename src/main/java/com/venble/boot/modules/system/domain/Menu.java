@@ -1,4 +1,4 @@
-package com.venble.boot.system.domain;
+package com.venble.boot.modules.system.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;

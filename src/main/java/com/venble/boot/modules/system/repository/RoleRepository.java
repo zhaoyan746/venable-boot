@@ -1,6 +1,6 @@
-package com.venble.boot.system.repository;
+package com.venble.boot.modules.system.repository;
 
-import com.venble.boot.system.domain.Role;
+import com.venble.boot.modules.system.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

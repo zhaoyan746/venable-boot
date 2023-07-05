@@ -1,10 +1,8 @@
-package com.venble.boot.system.controller;
+package com.venble.boot.modules.system.controller;
 
-import com.venble.boot.common.exception.ErrorCode;
 import com.venble.boot.common.vo.R;
-import com.venble.boot.security.domain.CustomUserDetails;
 import com.venble.boot.security.util.JwtTokenProvider;
-import com.venble.boot.system.controller.vm.LoginVM;
+import com.venble.boot.modules.system.controller.vm.LoginVM;
 import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

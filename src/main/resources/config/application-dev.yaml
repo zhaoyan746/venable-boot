@@ -13,10 +13,21 @@ spring:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
 
+  cache:
+    type: redis
+    redis:
+      cache-null-values: false
+      time-to-live: 3600000
+
   data:
     jpa:
       repositories:
         bootstrap-mode: deferred
+    redis:
+      host: localhost
+      port: 6379
+      password:
+      timeout: 600
 
   jpa:
     generate-ddl: false
