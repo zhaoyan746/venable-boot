@@ -1,6 +1,6 @@
 package com.venble.boot.modules.system.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.venble.boot.jpa.domain.AbstractAuditingEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -30,9 +30,9 @@ public class User extends AbstractAuditingEntity<Long> {
     @Column(length = 50, unique = true, nullable = false)
     private String username;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
-    @Size(min = 60, max = 60)
+    @Size(min = 1, max = 60)
     @Column(name = "password_hash", nullable = false, length = 50)
     private String password;
 
@@ -48,7 +48,7 @@ public class User extends AbstractAuditingEntity<Long> {
     @Column(nullable = false, name = "is_enabled")
     private boolean isEnabled = true;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany
     @JoinTable(
             name = "sys_user_role",
@@ -57,5 +57,3 @@ public class User extends AbstractAuditingEntity<Long> {
     @BatchSize(size = 20)
     private Set<Role> roles = new HashSet<>();
 }
-
-

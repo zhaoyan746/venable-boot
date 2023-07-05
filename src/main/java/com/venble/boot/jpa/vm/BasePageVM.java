@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Range;
 
 
 @Data
-public abstract class BasePageVM {
+public class BasePageVM {
 
     @NotNull
     @Range(min = 0)
